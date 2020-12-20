@@ -1,2 +1,2 @@
 # FullStackOpen
-This is a repository for a online course.
+This is a repository for an online course.
