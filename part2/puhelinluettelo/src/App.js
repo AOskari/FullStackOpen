@@ -18,8 +18,8 @@ const App = () => {
     personService
       .getAll()
       .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+        console.log('promise fulfilled', response.data)
+        setPersons(response.data)     
       })
   }, [])
 

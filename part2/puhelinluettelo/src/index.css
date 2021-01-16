@@ -24,9 +24,9 @@ button:hover {
   background-color: blue;
   cursor: pointer;
 }
+
 .error {
   display: flex;
-  height: 5vh;
   width: 90vw;
   border-radius: 25px;
   justify-content: center;

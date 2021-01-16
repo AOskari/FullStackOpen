@@ -20,8 +20,18 @@ const AddPerson = ({persons, setPersons, newName, newNumber, setMessage, setErro
             backgroundColor: 'green',
             color: 'white'
           })
-
           setMessage(`${newName} has been added to the phonebook!`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          setErrorStyle({
+            backgroundColor: 'red',
+            color: 'white'
+          }) 
+          console.log(error.response.data)
+          setMessage(JSON.stringify(error.response.data))
           setTimeout(() => {
             setMessage(null)
           }, 5000)
