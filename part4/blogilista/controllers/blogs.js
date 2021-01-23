@@ -3,9 +3,9 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
-
 const getTokenFrom = request => {
   const authorization = request.get('authorization')
+  console.log(authorization)
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     return authorization.substring(7)
   }
@@ -22,6 +22,7 @@ blogsRouter.get('/:id', (request, response, next) => {
   Blog.findById(request.params.id)
     .then(blog => {
       if (blog) {
+        console.log()
         response.json(blog.toJSON())
       } else {
         response.status(404).end()
@@ -34,7 +35,7 @@ blogsRouter.post('/', async (request, response, next) => {
   const body = request.body
   const token = getTokenFrom(request)
 
-  if (!token) {
+  if (!token) { 
     return response.status(401).json({ error: 'token is missing' })
   }
   
@@ -73,7 +74,7 @@ blogsRouter.post('/', async (request, response, next) => {
 blogsRouter.delete('/:id', async (request, response, next) => {
 
   const token = getTokenFrom(request)
-  console.log("1")
+  console.log(token)
 
   const decodedToken = jwt.verify(token, process.env.SECRET)
   console.log("2")
@@ -83,12 +84,9 @@ blogsRouter.delete('/:id', async (request, response, next) => {
   }
   console.log(decodedToken.id.toString())
   console.log("3")
-  console.log("4")
   console.log(request.params.id)
   console.log("5")
-
   const blog = await Blog.findById(request.params.id)
-
   if ( decodedToken.id.toString() === blog.user.toString() ) {
     const blogs = await Blog.findByIdAndRemove(request.params.id)
     return response.status(204).end()
@@ -96,7 +94,6 @@ blogsRouter.delete('/:id', async (request, response, next) => {
     return response.status(401).end()
   }
 })
-
 
 blogsRouter.put('/:id', async (request, response, next) => {
   const body = request.body
@@ -111,4 +108,10 @@ blogsRouter.put('/:id', async (request, response, next) => {
   response.status(204).end()
 })
 
+blogsRouter.post('/reset', async (request, response) => {
+  await Blog.deleteMany({})
+  await User.deleteMany({})
+
+  response.status(204).end()
+})
 module.exports = blogsRouter
