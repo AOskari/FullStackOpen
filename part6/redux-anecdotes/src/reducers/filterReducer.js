@@ -1,4 +1,4 @@
-const initialFilter = 'a'
+const initialFilter = ''
 
 export const filterChange = (filter) => {
     return {

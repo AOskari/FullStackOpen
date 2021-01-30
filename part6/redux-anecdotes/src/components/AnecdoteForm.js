@@ -10,13 +10,13 @@ const AnecdoteForm = (props) => {
     props.newAnecdote(content)
   }
 
-    return (
-        <form onSubmit={addAnecdote}>
-                <h2>create new</h2>
-            <input name='anecdote' />
-            <button type='submit' >create</button>
-        </form>
-    )
+  return (
+    <form onSubmit={addAnecdote}>
+      <h2>create new</h2>
+      <input name='anecdote' />
+      <button type='submit' >create</button>
+    </form>
+  )
 }
 
 const mapStateToProps = (state) => {
